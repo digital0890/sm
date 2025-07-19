@@ -19,130 +19,327 @@ TEHRAN_TZ = pytz.timezone('Asia/Tehran')
 # --- Custom CSS for enhanced styling ---
 st.markdown("""
 <style>
-    /* Main styling */
+    /* Enhanced Main styling with better gradients */
     [data-testid="stAppViewContainer"] {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
         color: #e6e6e6;
-        transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        min-height: 100vh;
     }
     
-    /* Header styling */
+    /* Enhanced Header styling with glassmorphism */
     .header {
-        background: rgba(10, 15, 35, 0.7);
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        margin-bottom: 25px;
-        border: 1px solid #4cc9f0;
-        transition: background 0.6s, border 0.6s;
+        background: linear-gradient(135deg, rgba(10, 15, 35, 0.9) 0%, rgba(67, 97, 238, 0.1) 100%);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(76, 201, 240, 0.2);
+        margin-bottom: 30px;
+        border: 1px solid rgba(76, 201, 240, 0.3);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
     
-    /* Card styling */
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(76, 201, 240, 0.1), transparent);
+        animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+    
+    /* Enhanced Card styling with 3D effects */
     .card {
-        background: rgba(20, 25, 45, 0.7) !important;
-        border-radius: 15px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-        border: 1px solid #4361ee;
+        background: linear-gradient(135deg, rgba(20, 25, 45, 0.9) 0%, rgba(67, 97, 238, 0.1) 100%) !important;
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(67, 97, 238, 0.2);
+        border: 1px solid rgba(67, 97, 238, 0.3);
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #4361ee, #4cc9f0, #f72585);
+        transform: scaleX(0);
+        transition: transform 0.5s ease;
     }
     
     .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 22px rgba(67, 97, 238, 0.4);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(67, 97, 238, 0.4), 0 0 0 2px rgba(76, 201, 240, 0.3);
     }
     
-    /* Button styling */
+    .card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    /* Enhanced Button styling with gradient and glow */
     .stButton>button {
-        background: linear-gradient(45deg, #4361ee, #4cc9f0) !important;
+        background: linear-gradient(45deg, #4361ee, #4cc9f0, #f72585) !important;
+        background-size: 200% 200% !important;
         border: none !important;
         color: white !important;
-        border-radius: 8px !important;
-        padding: 10px 24px !important;
-        font-weight: 600 !important;
-        transition: all 0.3s !important;
+        border-radius: 12px !important;
+        padding: 12px 28px !important;
+        font-weight: 700 !important;
+        font-size: 16px !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
         width: 100%;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+    }
+    
+    .stButton>button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
     }
     
     .stButton>button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.6);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(67, 97, 238, 0.6), 0 0 20px rgba(76, 201, 240, 0.4);
+        background-position: right center !important;
     }
     
-    /* Input styling */
+    .stButton>button:hover::before {
+        left: 100%;
+    }
+    
+    /* Enhanced Input styling with glow effects */
     .stTextInput>div>div>input, 
     .stSelectbox>div>div>select,
     .stDateInput>div>div>input,
     .stTimeInput>div>div>input,
     .stNumberInput>div>div>input {
-        background: rgba(30, 35, 55, 0.7) !important;
+        background: linear-gradient(135deg, rgba(30, 35, 55, 0.9) 0%, rgba(67, 97, 238, 0.1) 100%) !important;
         color: white !important;
-        border-radius: 8px !important;
-        border: 1px solid #4361ee !important;
-        transition: background 0.5s, color 0.5s, border 0.5s;
+        border-radius: 12px !important;
+        border: 2px solid rgba(67, 97, 238, 0.3) !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
     
-    /* Metric styling */
+    .stTextInput>div>div>input:focus, 
+    .stSelectbox>div>div>select:focus,
+    .stDateInput>div>div>input:focus,
+    .stTimeInput>div>div>input:focus,
+    .stNumberInput>div>div>input:focus {
+        border-color: #4cc9f0 !important;
+        box-shadow: 0 0 20px rgba(76, 201, 240, 0.4), 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+        transform: scale(1.02);
+    }
+    
+    /* Enhanced Metric styling with 3D cards */
     [data-testid="metric-container"] {
-        background: rgba(20, 25, 45, 0.7) !important;
-        border: 1px solid #4cc9f0 !important;
-        border-radius: 10px;
-        padding: 15px !important;
-        transition: background 0.5s, border 0.5s;
+        background: linear-gradient(135deg, rgba(20, 25, 45, 0.9) 0%, rgba(76, 201, 240, 0.1) 100%) !important;
+        backdrop-filter: blur(15px);
+        border: 2px solid rgba(76, 201, 240, 0.3) !important;
+        border-radius: 15px;
+        padding: 20px !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
     }
     
-    /* Table styling */
+    [data-testid="metric-container"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #4361ee, #4cc9f0);
+    }
+    
+    [data-testid="metric-container"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(76, 201, 240, 0.3);
+    }
+    
+    /* Enhanced Table styling with glassmorphism */
     .dataframe {
-        background: rgba(20, 25, 45, 0.7) !important;
+        background: linear-gradient(135deg, rgba(20, 25, 45, 0.9) 0%, rgba(67, 97, 238, 0.05) 100%) !important;
         color: white !important;
-        border-radius: 10px;
-        transition: background 0.5s, color 0.5s;
+        border-radius: 15px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(67, 97, 238, 0.2);
+        overflow: hidden;
     }
     
     .dataframe th {
-        background: rgba(67, 97, 238, 0.5) !important;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.6) 0%, rgba(76, 201, 240, 0.3) 100%) !important;
         color: white !important;
-        transition: background 0.5s, color 0.5s;
+        font-weight: 700 !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border-bottom: 2px solid rgba(76, 201, 240, 0.3);
     }
     
     .dataframe td {
-        background: rgba(30, 35, 55, 0.5) !important;
-        transition: background 0.5s;
+        background: linear-gradient(135deg, rgba(30, 35, 55, 0.6) 0%, rgba(67, 97, 238, 0.05) 100%) !important;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(67, 97, 238, 0.1);
     }
     
-    /* Tab styling */
+    .dataframe tr:hover td {
+        background: linear-gradient(135deg, rgba(76, 201, 240, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%) !important;
+        transform: scale(1.01);
+    }
+    
+    /* Enhanced Tab styling with modern design */
     [data-baseweb="tab-list"] {
-        gap: 10px !important;
+        gap: 15px !important;
+        background: linear-gradient(135deg, rgba(20, 25, 45, 0.8) 0%, rgba(67, 97, 238, 0.1) 100%);
+        border-radius: 15px;
+        padding: 10px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(67, 97, 238, 0.2);
     }
     
     [data-baseweb="tab"] {
-        background: rgba(30, 35, 55, 0.7) !important;
-        border-radius: 8px !important;
-        padding: 10px 20px !important;
-        margin: 0 5px !important;
-        transition: background 0.5s, border 0.5s, color 0.5s;
-        border: 1px solid #4361ee !important;
+        background: linear-gradient(135deg, rgba(30, 35, 55, 0.8) 0%, rgba(67, 97, 238, 0.1) 100%) !important;
+        border-radius: 12px !important;
+        padding: 12px 24px !important;
+        margin: 0 8px !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid rgba(67, 97, 238, 0.2) !important;
+        backdrop-filter: blur(10px);
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    [data-baseweb="tab"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(76, 201, 240, 0.1), transparent);
+        transition: left 0.5s;
     }
     
     [data-baseweb="tab"]:hover {
-        background: rgba(67, 97, 238, 0.3) !important;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.3) 0%, rgba(76, 201, 240, 0.1) 100%) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(67, 97, 238, 0.3);
+    }
+    
+    [data-baseweb="tab"]:hover::before {
+        left: 100%;
     }
     
     [aria-selected="true"] {
-        background: linear-gradient(45deg, #4361ee, #4cc9f0) !important;
-        font-weight: bold !important;
-        transition: background 0.5s, color 0.5s;
+        background: linear-gradient(45deg, #4361ee, #4cc9f0, #f72585) !important;
+        background-size: 200% 200% !important;
+        font-weight: 700 !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        border-color: rgba(76, 201, 240, 0.5) !important;
+        animation: gradientShift 3s ease infinite;
     }
     
-    /* Crypto icons */
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* Enhanced Crypto icons with glow */
     .crypto-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
+        width: 28px;
+        height: 28px;
+        margin-right: 12px;
         vertical-align: middle;
         display: inline-block;
-        transition: filter 0.5s;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: drop-shadow(0 2px 8px rgba(76, 201, 240, 0.3));
+    }
+    
+    .crypto-icon:hover {
+        transform: scale(1.2) rotate(5deg);
+        filter: drop-shadow(0 4px 12px rgba(76, 201, 240, 0.6));
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(20, 25, 45, 0.5);
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(45deg, #4361ee, #4cc9f0);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(45deg, #4cc9f0, #f72585);
+    }
+    
+    /* Loading animation */
+    .loading-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+    
+    /* Floating elements animation */
+    .floating {
+        animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    /* Glow text effect */
+    .glow-text {
+        text-shadow: 0 0 10px rgba(76, 201, 240, 0.8), 0 0 20px rgba(76, 201, 240, 0.4);
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+        from { text-shadow: 0 0 10px rgba(76, 201, 240, 0.8), 0 0 20px rgba(76, 201, 240, 0.4); }
+        to { text-shadow: 0 0 15px rgba(76, 201, 240, 1), 0 0 25px rgba(76, 201, 240, 0.6); }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -383,7 +580,8 @@ DEFAULTS = {
     '5m': {'left': 8, 'right': 8, 'days': 3},
     '15m': {'left': 6, 'right': 6, 'days': 5},
     '30m': {'left': 5, 'right': 5, 'days': 7},
-    '1h': {'left': 4, 'right': 4, 'days': 14}
+    '1h': {'left': 4, 'right': 4, 'days': 14},
+    '4h': {'left': 3, 'right': 3, 'days': 30}
 }
 
 # Comprehensive asset database
@@ -400,7 +598,8 @@ ASSET_DATABASE = {
         "Avalanche": "AVAX-USD",
         "Polygon": "MATIC-USD",
         "Chainlink": "LINK-USD",
-        "Litecoin": "LTC-USD"
+        "Litecoin": "LTC-USD",
+        "Pepe": "PEPE24478-USD"
     },
     "Precious Metals": {
         "Gold": "GC=F",
@@ -450,22 +649,40 @@ ASSET_DATABASE = {
 # --- Page Configuration ---
 # (Removed duplicate st.set_page_config block here)
 
-# --- Header ---
+# --- Enhanced Header ---
 st.markdown("""
 <div class="header">
-    <h1 style="text-align:center; color:#4cc9f0; margin-bottom:0;">SMART MONEY SUPPORT & RESISTANCE FINDER</h1>
-    <p style="text-align:center; font-size:1.1rem; color:#a0aec0;">
-        Advanced algorithm to detect institutional support/resistance levels using price action analysis
-    </p>
+    <div style="text-align:center; position:relative;">
+        <div style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); width:60px; height:60px; background:linear-gradient(45deg, #4361ee, #4cc9f0); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 25px rgba(76, 201, 240, 0.4);">
+            <span style="font-size:24px;">📊</span>
+        </div>
+        <h1 style="text-align:center; color:#4cc9f0; margin-bottom:10px; font-size:2.5rem; font-weight:800; text-shadow:0 4px 8px rgba(0,0,0,0.3);" class="glow-text">SMART MONEY S/R FINDER</h1>
+        <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:15px;">
+            <div style="width:40px; height:3px; background:linear-gradient(90deg, #4361ee, #4cc9f0); border-radius:2px;"></div>
+            <span style="color:#a0aec0; font-size:1.2rem; font-weight:600;">PRO</span>
+            <div style="width:40px; height:3px; background:linear-gradient(90deg, #4cc9f0, #f72585); border-radius:2px;"></div>
+        </div>
+        <p style="text-align:center; font-size:1.2rem; color:#a0aec0; margin-bottom:0; font-weight:500;">
+            🧠 Advanced AI-Powered Institutional Level Detection
+        </p>
+        <div style="display:flex; justify-content:center; gap:15px; margin-top:15px;">
+            <span style="background:rgba(76, 201, 240, 0.2); padding:5px 12px; border-radius:20px; font-size:0.9rem; color:#4cc9f0; border:1px solid rgba(76, 201, 240, 0.3);">📈 Real-time Analysis</span>
+            <span style="background:rgba(247, 37, 133, 0.2); padding:5px 12px; border-radius:20px; font-size:0.9rem; color:#f72585; border:1px solid rgba(247, 37, 133, 0.3);">🎯 Smart Detection</span>
+            <span style="background:rgba(67, 97, 238, 0.2); padding:5px 12px; border-radius:20px; font-size:0.9rem; color:#4361ee; border:1px solid rgba(67, 97, 238, 0.3);">⚡ Fast Processing</span>
+        </div>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# --- Sidebar for Inputs ---
+# --- Enhanced Sidebar for Inputs ---
 with st.sidebar:
     st.markdown("""
-    <div style="text-align:center; padding:10px; border-radius:10px; background:rgba(67, 97, 238, 0.3);">
-        <h3 style="color:#4cc9f0; margin-bottom:5px;">⚙️ ANALYSIS PARAMETERS</h3>
-        <p style="font-size:0.9rem;">Configure your technical analysis</p>
+    <div style="text-align:center; padding:20px; border-radius:15px; background:linear-gradient(135deg, rgba(67, 97, 238, 0.2) 0%, rgba(76, 201, 240, 0.1) 100%); backdrop-filter:blur(15px); border:1px solid rgba(76, 201, 240, 0.3); box-shadow:0 8px 25px rgba(0,0,0,0.2);">
+        <div style="width:50px; height:50px; background:linear-gradient(45deg, #4361ee, #4cc9f0); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px; box-shadow:0 4px 15px rgba(76, 201, 240, 0.4);">
+            <span style="font-size:20px;">⚙️</span>
+        </div>
+        <h3 style="color:#4cc9f0; margin-bottom:8px; font-size:1.3rem; font-weight:700;">ANALYSIS PARAMETERS</h3>
+        <p style="font-size:1rem; color:#a0aec0; margin:0;">Configure your technical analysis</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -491,8 +708,8 @@ with st.sidebar:
     # Timeframe selection
     interval = st.selectbox(
         '**Timeframe**', 
-        options=['1m', '5m', '15m', '30m', '1h'],
-        index=1,
+        options=['1m', '5m', '15m', '30m', '1h', '4h'],
+        index=4,
         help="Select chart timeframe for analysis"
     )
     
@@ -514,9 +731,18 @@ with st.sidebar:
         end_date = st.date_input('**End Date**', end_dt.date())
         end_time = st.time_input('**End Time**', end_dt.time())
     
-    # Swing parameters
-    st.markdown("---")
-    st.markdown("**⚖️ Swing Detection Parameters**")
+    # Enhanced Swing parameters
+    st.markdown("""
+    <div style="margin:20px 0; padding:15px; border-radius:12px; background:linear-gradient(135deg, rgba(76, 201, 240, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); border:1px solid rgba(76, 201, 240, 0.2);">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <div style="width:30px; height:30px; background:linear-gradient(45deg, #f72585, #4361ee); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                <span style="font-size:14px;">⚖️</span>
+            </div>
+            <h4 style="color:#4cc9f0; margin:0; font-weight:700;">Swing Detection Parameters</h4>
+        </div>
+        <p style="color:#a0aec0; font-size:0.9rem; margin:0;">Fine-tune the sensitivity of level detection</p>
+    </div>
+    """, unsafe_allow_html=True)
     if interval in DEFAULTS:
         default_left = DEFAULTS[interval]['left']
         default_right = DEFAULTS[interval]['right']
@@ -530,17 +756,39 @@ with st.sidebar:
                     help="Number of candles to the right to compare")
     
     # Calculate coverage info
-    time_multipliers = {'1m': 1, '5m': 5, '15m': 15, '30m': 30, '1h': 60}
+    time_multipliers = {'1m': 1, '5m': 5, '15m': 15, '30m': 30, '1h': 60, '4h': 240}
     coverage_minutes = (left + right + 1) * time_multipliers.get(interval, 60)
     coverage_hours = coverage_minutes / 60
     
-    st.info(f"""
-    **Current Settings:**
-    - Asset: {symbol_name} ({symbol})
-    - Timeframe: `{interval}`
-    - Swing Window: `{left}` left / `{right}` right
-    - Time Coverage: ~{coverage_hours:.1f} hours
-    """)
+    st.markdown(f"""
+    <div style="padding:20px; border-radius:15px; background:linear-gradient(135deg, rgba(76, 201, 240, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); border:2px solid rgba(76, 201, 240, 0.3); margin:20px 0;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+            <div style="width:35px; height:35px; background:linear-gradient(45deg, #4361ee, #4cc9f0); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                <span style="font-size:16px;">📊</span>
+            </div>
+            <h4 style="color:#4cc9f0; margin:0; font-weight:700;">Current Settings</h4>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div style="background:rgba(67, 97, 238, 0.1); padding:10px; border-radius:8px; border:1px solid rgba(67, 97, 238, 0.2);">
+                <span style="color:#a0aec0; font-size:0.9rem;">Asset:</span><br>
+                <span style="color:#4cc9f0; font-weight:600;">{symbol_name}</span><br>
+                <span style="color:#a0aec0; font-size:0.8rem;">({symbol})</span>
+            </div>
+            <div style="background:rgba(76, 201, 240, 0.1); padding:10px; border-radius:8px; border:1px solid rgba(76, 201, 240, 0.2);">
+                <span style="color:#a0aec0; font-size:0.9rem;">Timeframe:</span><br>
+                <span style="color:#4cc9f0; font-weight:600;">{interval}</span>
+            </div>
+            <div style="background:rgba(247, 37, 133, 0.1); padding:10px; border-radius:8px; border:1px solid rgba(247, 37, 133, 0.2);">
+                <span style="color:#a0aec0; font-size:0.9rem;">Swing Window:</span><br>
+                <span style="color:#f72585; font-weight:600;">{left} left / {right} right</span>
+            </div>
+            <div style="background:rgba(67, 97, 238, 0.1); padding:10px; border-radius:8px; border:1px solid rgba(67, 97, 238, 0.2);">
+                <span style="color:#a0aec0; font-size:0.9rem;">Coverage:</span><br>
+                <span style="color:#4cc9f0; font-weight:600;">~{coverage_hours:.1f} hours</span>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Analysis button
     if st.button('🚀 Run Smart Analysis', use_container_width=True):
@@ -639,38 +887,113 @@ if st.session_state.fig is not None:
     with tab3:
         st.markdown("""
         <div class="card">
-            <h3>🧠 How This Tool Works</h3>
-            <p>This algorithm identifies institutional support/resistance levels using price action analysis:</p>
+            <div style="text-align:center; margin-bottom:30px;">
+                <div style="width:80px; height:80px; background:linear-gradient(45deg, #4361ee, #4cc9f0, #f72585); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; box-shadow:0 8px 25px rgba(76, 201, 240, 0.4);">
+                    <span style="font-size:32px;">🧠</span>
+                </div>
+                <h2 style="color:#4cc9f0; margin-bottom:10px; font-size:2rem; font-weight:800;">How This Tool Works</h2>
+                <p style="color:#a0aec0; font-size:1.1rem;">Advanced AI-powered institutional level detection</p>
+            </div>
             
-            <ol>
-                <li><b>Swing High Detection:</b> Finds candles with the highest high in a defined window</li>
-                <li><b>Swing Low Detection:</b> Finds candles with the lowest low in a defined window</li>
-                <li><b>Significance Filter:</b> Only levels that haven't been broken by prior price action are shown</li>
-                <li><b>Cluster Detection:</b> Groups nearby levels into significant zones</li>
-            </ol>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:30px;">
+                <div style="background:linear-gradient(135deg, rgba(76, 201, 240, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); padding:20px; border-radius:15px; border:1px solid rgba(76, 201, 240, 0.2);">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                        <div style="width:30px; height:30px; background:linear-gradient(45deg, #4361ee, #4cc9f0); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                            <span style="font-size:14px;">📈</span>
+                        </div>
+                        <h4 style="color:#4cc9f0; margin:0; font-weight:700;">Swing High Detection</h4>
+                    </div>
+                    <p style="color:#a0aec0; margin:0;">Finds candles with the highest high in a defined window</p>
+                </div>
+                
+                <div style="background:linear-gradient(135deg, rgba(247, 37, 133, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); padding:20px; border-radius:15px; border:1px solid rgba(247, 37, 133, 0.2);">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                        <div style="width:30px; height:30px; background:linear-gradient(45deg, #f72585, #4361ee); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                            <span style="font-size:14px;">📉</span>
+                        </div>
+                        <h4 style="color:#f72585; margin:0; font-weight:700;">Swing Low Detection</h4>
+                    </div>
+                    <p style="color:#a0aec0; margin:0;">Finds candles with the lowest low in a defined window</p>
+                </div>
+                
+                <div style="background:linear-gradient(135deg, rgba(76, 201, 240, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); padding:20px; border-radius:15px; border:1px solid rgba(76, 201, 240, 0.2);">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                        <div style="width:30px; height:30px; background:linear-gradient(45deg, #4361ee, #4cc9f0); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                            <span style="font-size:14px;">🎯</span>
+                        </div>
+                        <h4 style="color:#4cc9f0; margin:0; font-weight:700;">Significance Filter</h4>
+                    </div>
+                    <p style="color:#a0aec0; margin:0;">Only levels that haven't been broken by prior price action</p>
+                </div>
+                
+                <div style="background:linear-gradient(135deg, rgba(247, 37, 133, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); padding:20px; border-radius:15px; border:1px solid rgba(247, 37, 133, 0.2);">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                        <div style="width:30px; height:30px; background:linear-gradient(45deg, #f72585, #4361ee); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                            <span style="font-size:14px;">🔍</span>
+                        </div>
+                        <h4 style="color:#f72585; margin:0; font-weight:700;">Cluster Detection</h4>
+                    </div>
+                    <p style="color:#a0aec0; margin:0;">Groups nearby levels into significant zones</p>
+                </div>
+            </div>
             
-            <h3>🎯 How to Use These Levels</h3>
-            <ul>
-                <li><b>Support:</b> Price areas where buying interest is strong enough to overcome selling pressure</li>
-                <li><b>Resistance:</b> Price areas where selling pressure overcomes buying interest</li>
-                <li>Look for price reactions at these levels (bounces or breakouts)</li>
-                <li>Combine with other technical indicators for confirmation</li>
-            </ul>
+            <div style="background:linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(76, 201, 240, 0.05) 100%); padding:25px; border-radius:15px; border:1px solid rgba(67, 97, 238, 0.2); margin-bottom:30px;">
+                <h3 style="color:#4cc9f0; margin-bottom:20px; font-size:1.5rem; font-weight:700;">🎯 How to Use These Levels</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div>
+                        <h4 style="color:#4cc9f0; margin-bottom:10px; font-weight:600;">Support Levels</h4>
+                        <p style="color:#a0aec0; margin:0;">Price areas where buying interest is strong enough to overcome selling pressure</p>
+                    </div>
+                    <div>
+                        <h4 style="color:#f72585; margin-bottom:10px; font-weight:600;">Resistance Levels</h4>
+                        <p style="color:#a0aec0; margin:0;">Price areas where selling pressure overcomes buying interest</p>
+                    </div>
+                </div>
+            </div>
             
-            <h3>⚙️ Parameter Guidance</h3>
-            <p><b>Left/Right Candles:</b> Determines sensitivity of level detection. Higher values find stronger, more significant levels.</p>
-            <p><b>Timeframe:</b> Higher timeframes show more significant levels. Use multiple timeframes for confirmation.</p>
+            <div style="background:linear-gradient(135deg, rgba(76, 201, 240, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); padding:25px; border-radius:15px; border:1px solid rgba(76, 201, 240, 0.2); margin-bottom:30px;">
+                <h3 style="color:#4cc9f0; margin-bottom:20px; font-size:1.5rem; font-weight:700;">⚙️ Parameter Guidance</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div>
+                        <h4 style="color:#4cc9f0; margin-bottom:10px; font-weight:600;">Left/Right Candles</h4>
+                        <p style="color:#a0aec0; margin:0;">Determines sensitivity of level detection. Higher values find stronger, more significant levels.</p>
+                    </div>
+                    <div>
+                        <h4 style="color:#f72585; margin-bottom:10px; font-weight:600;">Timeframe</h4>
+                        <p style="color:#a0aec0; margin:0;">Higher timeframes show more significant levels. Use multiple timeframes for confirmation.</p>
+                    </div>
+                </div>
+            </div>
             
-            <h3>📊 Supported Assets</h3>
-            <p>This tool supports analysis of:</p>
-            <ul>
-                <li>Cryptocurrencies (Bitcoin, Ethereum, etc.)</li>
-                <li>Precious Metals (Gold, Silver, etc.)</li>
-                <li>Energy Commodities (Oil, Gas, etc.)</li>
-                <li>Forex Pairs (EUR/USD, USD/JPY, etc.)</li>
-                <li>Market Indices (S&P 500, NASDAQ, etc.)</li>
-                <li>Stocks (Apple, Tesla, etc.)</li>
-            </ul>
+            <div style="background:linear-gradient(135deg, rgba(247, 37, 133, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%); padding:25px; border-radius:15px; border:1px solid rgba(247, 37, 133, 0.2);">
+                <h3 style="color:#f72585; margin-bottom:20px; font-size:1.5rem; font-weight:700;">📊 Supported Assets</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
+                    <div style="background:rgba(67, 97, 238, 0.1); padding:12px; border-radius:8px; border:1px solid rgba(67, 97, 238, 0.2);">
+                        <span style="color:#4cc9f0; font-weight:600;">💎 Cryptocurrencies</span><br>
+                        <span style="color:#a0aec0; font-size:0.9rem;">Bitcoin, Ethereum, etc.</span>
+                    </div>
+                    <div style="background:rgba(76, 201, 240, 0.1); padding:12px; border-radius:8px; border:1px solid rgba(76, 201, 240, 0.2);">
+                        <span style="color:#4cc9f0; font-weight:600;">🥇 Precious Metals</span><br>
+                        <span style="color:#a0aec0; font-size:0.9rem;">Gold, Silver, etc.</span>
+                    </div>
+                    <div style="background:rgba(247, 37, 133, 0.1); padding:12px; border-radius:8px; border:1px solid rgba(247, 37, 133, 0.2);">
+                        <span style="color:#f72585; font-weight:600;">⛽ Energy</span><br>
+                        <span style="color:#a0aec0; font-size:0.9rem;">Oil, Gas, etc.</span>
+                    </div>
+                    <div style="background:rgba(67, 97, 238, 0.1); padding:12px; border-radius:8px; border:1px solid rgba(67, 97, 238, 0.2);">
+                        <span style="color:#4cc9f0; font-weight:600;">💱 Forex</span><br>
+                        <span style="color:#a0aec0; font-size:0.9rem;">EUR/USD, USD/JPY, etc.</span>
+                    </div>
+                    <div style="background:rgba(76, 201, 240, 0.1); padding:12px; border-radius:8px; border:1px solid rgba(76, 201, 240, 0.2);">
+                        <span style="color:#4cc9f0; font-weight:600;">📈 Indices</span><br>
+                        <span style="color:#a0aec0; font-size:0.9rem;">S&P 500, NASDAQ, etc.</span>
+                    </div>
+                    <div style="background:rgba(247, 37, 133, 0.1); padding:12px; border-radius:8px; border:1px solid rgba(247, 37, 133, 0.2);">
+                        <span style="color:#f72585; font-weight:600;">📊 Stocks</span><br>
+                        <span style="color:#a0aec0; font-size:0.9rem;">Apple, Tesla, etc.</span>
+                    </div>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -699,11 +1022,25 @@ else:
         </div>
         """, unsafe_allow_html=True)
 
-# --- Footer ---
+# --- Enhanced Footer ---
 st.markdown("---")
 st.markdown("""
-<div style="text-align:center; color:#a0aec0; font-size:0.9rem; padding:20px;">
-    <p>Smart Money S/R Finder Pro • Real-time institutional level detection • Data from Yahoo Finance</p>
-    <p>Note: This is for educational purposes only. Past performance is not indicative of future results.</p>
+<div style="text-align:center; padding:30px; background:linear-gradient(135deg, rgba(10, 15, 35, 0.8) 0%, rgba(67, 97, 238, 0.1) 100%); border-radius:20px; border:1px solid rgba(76, 201, 240, 0.2); margin-top:40px;">
+    <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:20px;">
+        <div style="width:40px; height:40px; background:linear-gradient(45deg, #4361ee, #4cc9f0); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 15px rgba(76, 201, 240, 0.4);">
+            <span style="font-size:18px;">📊</span>
+        </div>
+        <h3 style="color:#4cc9f0; margin:0; font-weight:700; font-size:1.3rem;">Smart Money S/R Finder Pro</h3>
+        <div style="width:40px; height:40px; background:linear-gradient(45deg, #f72585, #4361ee); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 15px rgba(247, 37, 133, 0.4);">
+            <span style="font-size:18px;">⚡</span>
+        </div>
+    </div>
+    <div style="display:flex; justify-content:center; gap:30px; margin-bottom:20px; flex-wrap:wrap;">
+        <span style="background:rgba(76, 201, 240, 0.2); padding:8px 16px; border-radius:20px; font-size:0.9rem; color:#4cc9f0; border:1px solid rgba(76, 201, 240, 0.3);">📈 Real-time Analysis</span>
+        <span style="background:rgba(247, 37, 133, 0.2); padding:8px 16px; border-radius:20px; font-size:0.9rem; color:#f72585; border:1px solid rgba(247, 37, 133, 0.3);">🎯 Smart Detection</span>
+        <span style="background:rgba(67, 97, 238, 0.2); padding:8px 16px; border-radius:20px; font-size:0.9rem; color:#4361ee; border:1px solid rgba(67, 97, 238, 0.3);">⚡ Fast Processing</span>
+    </div>
+    <p style="color:#a0aec0; font-size:1rem; margin-bottom:10px; font-weight:500;">Data from Yahoo Finance • Advanced institutional level detection</p>
+    <p style="color:#a0aec0; font-size:0.9rem; margin:0; opacity:0.8;">⚠️ Note: This is for educational purposes only. Past performance is not indicative of future results.</p>
 </div>
 """, unsafe_allow_html=True)
